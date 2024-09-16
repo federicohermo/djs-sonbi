@@ -5,6 +5,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'), // Output directory
     filename: 'bundle.js', // Output file name
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'], // Extensions to resolve
@@ -37,6 +38,7 @@ module.exports = {
     },
     compress: true,
     port: 9000,
+    historyApiFallback: true,
   },
   devtool: 'source-map', // Enable source maps for debugging
   mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',

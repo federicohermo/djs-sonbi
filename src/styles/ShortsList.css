@@ -1,38 +1,35 @@
 /* src/styles/PatientList.css */
 
-.patientList {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 columns grid */
-    gap: 16px; /* Adds spacing between patient cards */
+.shortList {
     padding: 16px;
     background-color: var(--almond_light);/*#f9f9f9;*/
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 5rem;
+    margin: 5rem 0 7.5rem 0;
     transition: background-color 0.3s ease-in-out;
 }
 
-.patientList.dark-mode {
+.shortList.dark-mode {
     background-color: var(--dark_light);
 }
 
 /* Media query for larger screens (e.g., PC monitors or TVs) */
 @media (min-width: 1920px) {
-    .patientList {
+    .shortList {
         grid-template-columns: repeat(3, 1fr); /* 3 columns grid */
     }
 }
 
 /* Media query for medium screens (e.g., laptops) */
 @media (min-width: 768px) and (max-width: 1024px) {
-    .patientList {
+    .shortList {
         grid-template-columns: repeat(2, 1fr); /* 2 columns grid */
     }
 }
 
 /* Media query for mobile screens */
 @media (max-width: 767px) {
-    .patientList {
+    .shortList {
         display: flex;
         flex-direction: column; /* Stack items vertically on mobile screens */
         gap: 16px; /* Space between patient cards */

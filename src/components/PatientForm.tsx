@@ -1,19 +1,20 @@
 // src/components/PatientForm.tsx
 
 import React, { useState, ChangeEvent} from 'react';
-import { Patient } from '../context/PatientContext';
+import { Short } from '../context/ShortsContext';
+import { useTheme } from '../hooks/useTheme';
 import Modal from "./Modal"
 import '../styles/PatientForm.css';
 
 interface PatientFormProps {
-  initialData?: Patient | null;
-  onSubmit: (data: Patient) => void;
+  initialData?: Short | null;
+  onSubmit: (data: Short) => void;
   onCancel: () => void;
-  darkMode?: boolean;
 }
 
-const PatientForm: React.FC<PatientFormProps> = ({ initialData, onSubmit, onCancel, darkMode }) => {
-  const [formData, setFormData] = useState<Patient>(initialData || { id: '', name: '', description: '' });
+const PatientForm: React.FC<PatientFormProps> = ({ initialData, onSubmit, onCancel}) => {
+  const {isDarkMode} = useTheme()
+  const [formData, setFormData] = useState<Short>(initialData || {});
   const [additionalFields, setAdditionalFields] = useState<{ [key: string]: string }>({});
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -51,10 +52,6 @@ const PatientForm: React.FC<PatientFormProps> = ({ initialData, onSubmit, onCanc
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
-    if (!formData.name) newErrors.name = 'Name is required';
-    if (!formData.id) newErrors.id = 'Valid id is required';
-    if (!formData.website) newErrors.website = 'Website URL is required';
-    if (!formData.description) newErrors.description = 'Description is required';
     initialData && Object.keys(initialData).map((key) => {
       if (!formData[key].trim()) newErrors[key] = key.charAt(0).toUpperCase() + key.slice(1) + ' is required';
       return newErrors;
@@ -83,10 +80,10 @@ const PatientForm: React.FC<PatientFormProps> = ({ initialData, onSubmit, onCanc
   };
 
   return (
-    <form onSubmit={handleSubmit} className={`form ${darkMode ? 'dark-mode' : ''}`}>
+    <form onSubmit={handleSubmit} className={`form ${isDarkMode ? 'dark-mode' : ''}`}>
       {initialData ? Object.keys(initialData).map((key) => {
         return(key !== "createdAt" &&
-          <div className={`formGroup ${darkMode ? 'dark-mode' : ''}`}>
+          <div className={`formGroup ${isDarkMode ? 'dark-mode' : ''}`}>
             <label htmlFor={key}>{key.charAt(0).toUpperCase() + key.slice(1)}</label>
             <input
               type="text"
@@ -102,61 +99,10 @@ const PatientForm: React.FC<PatientFormProps> = ({ initialData, onSubmit, onCanc
       })
       : 
       <>
-      <div className={`formGroup ${darkMode ? 'dark-mode' : ''}`}>
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={formData.name}
-          onChange={handleInputChange}
-          className={errors.name ? "errorInput" : ''}
-        />
-        {errors.name && <p className="errorMessage">{errors.name}</p>}
-      </div>
-
-      <div className={`formGroup ${darkMode ? 'dark-mode' : ''}`}>
-        <label htmlFor="id">ID</label>
-        <input
-          type="text"
-          id="id"
-          name="id"
-          value={formData.id}
-          onChange={handleInputChange}
-          className={errors.id ? "errorInput" : ''}
-        />
-        {errors.id && <p className="errorMessage">{errors.id}</p>}
-      </div>
-
-      <div className={`formGroup ${darkMode ? 'dark-mode' : ''}`}>
-        <label htmlFor="website">Website URL</label>
-        <input
-          type="text"
-          id="website"
-          name="website"
-          value={formData.website}
-          onChange={handleInputChange}
-          className={errors.website ? "errorInput" : ''}
-        />
-        {errors.website && <p className="errorMessage">{errors.website}</p>}
-      </div>
-
-      <div className={`formGroup ${darkMode ? 'dark-mode' : ''}`}>
-        <label htmlFor="description">Description</label>
-        <input
-          type="text"
-          id="description"
-          name="description"
-          value={formData.description}
-          onChange={handleInputChange}
-          className={errors.description ? "errorInput" : ''}
-        />
-        {errors.description && <p className="errorMessage">{errors.description}</p>}
-      </div>
       </>}
 
       {Object.keys(additionalFields).map((fieldName) => (
-        <div className={`formGroup ${darkMode ? 'dark-mode' : ''}`}>
+        <div className={`formGroup ${isDarkMode ? 'dark-mode' : ''}`}>
         <label htmlFor={fieldName}>{fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}:</label>
         <input
           id={fieldName}
@@ -169,19 +115,19 @@ const PatientForm: React.FC<PatientFormProps> = ({ initialData, onSubmit, onCanc
         </div>
       ))}
       {initialData ? 
-      <button type="button" className={`addFieldButton ${darkMode ? 'dark-mode' : ''}`} onClick={handleAddField}>
+      <button type="button" className={`addFieldButton ${isDarkMode ? 'dark-mode' : ''}`} onClick={handleAddField}>
         Add Field
       </button> 
       : null}
 
-      <div className={`formActions ${darkMode ? 'dark-mode' : ''}`}>
-        <button type="submit" className={`submitButton ${darkMode ? 'dark-mode' : ''}`} onClick={validateForm}>Submit</button>
-        <button type="button" onClick={onCancel} className={`cancelButton ${darkMode ? 'dark-mode' : ''}`}>Cancel</button>
+      <div className={`formActions ${isDarkMode ? 'dark-mode' : ''}`}>
+        <button type="submit" className={`submitButton ${isDarkMode ? 'dark-mode' : ''}`} onClick={validateForm}>Submit</button>
+        <button type="button" onClick={onCancel} className={`cancelButton ${isDarkMode ? 'dark-mode' : ''}`}>Cancel</button>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} size={"small"} darkMode={darkMode}>
-        <div className={`form ${darkMode ? 'dark-mode' : ''}`}>
-          <div className={`formGroup ${darkMode ? 'dark-mode' : ''}`}>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} size={"small"}>
+        <div className={`form ${isDarkMode ? 'dark-mode' : ''}`}>
+          <div className={`formGroup ${isDarkMode ? 'dark-mode' : ''}`}>
             <label htmlFor="newField">Field Name:</label>
             <input
               type="text"
@@ -192,8 +138,8 @@ const PatientForm: React.FC<PatientFormProps> = ({ initialData, onSubmit, onCanc
             />
             {modalError && <p className='errorMessage'>{modalError}</p>}
           </div>
-          <div className={`formActions ${darkMode ? 'dark-mode' : ''}`}>
-            <button type="button" className={`submitButton ${darkMode ? 'dark-mode' : ''}`} onClick={handleModalSubmit}>+</button>
+          <div className={`formActions ${isDarkMode ? 'dark-mode' : ''}`}>
+            <button type="button" className={`submitButton ${isDarkMode ? 'dark-mode' : ''}`} onClick={handleModalSubmit}>+</button>
           </div>
         </div>
       </Modal>

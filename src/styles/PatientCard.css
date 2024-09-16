@@ -10,7 +10,7 @@
   color: #4f4f4f;
   transition: box-shadow 0.3s ease-in-out;
   min-width: 27vw;
-  min-height: 14rem;
+  min-height: 42rem;
 }
 
 .patientCard.dark-mode {
@@ -175,7 +175,7 @@ button.dark-mode:hover {
 
 .arrow {
   display: inline-block;
-  filter: invert(45%) sepia(89%) saturate(2366%) hue-rotate(68deg) brightness(91%) contrast(101%);
+  filter: invert(0%) sepia(89%) saturate(2366%) hue-rotate(68deg) brightness(91%) contrast(101%);
   opacity: 0.5;
   transition: transform 0.3s ease-in-out;
 }

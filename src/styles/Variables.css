@@ -1,13 +1,13 @@
 /* src/styles/Variables.css */
 
 :root {
-    --almond: hwb(350 85% 0%);
-    --almond_light: hwb(350 90% 0%);
-    --almond_light_transparent: hwb(350 90% 0% / 0.8);
+    --almond: white;
+    --almond_light: white;
+    --almond_light_transparent: hsla(0, 0%, 100%, 0.8);
     --dark: hsl(0, 0%, 20%);
     --dark_light: hsl(0, 0%, 30%);
     --dark_light_transparent: hsla(0, 0%, 30%, 0.8);
-    --blue_button: #005fb3;
+    --blue_button: rgb(250, 0, 175);
     --blue_button_transparent: hsla(208, 100%, 55%, 0.3);
     --blue_button_hover: #003666;
     --blue_icon: invert(22%) sepia(36%) saturate(5207%) hue-rotate(194deg) brightness(98%) contrast(102%);
