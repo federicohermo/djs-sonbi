@@ -21,19 +21,16 @@ interface ShortProviderProps {
 export const ShortProvider: React.FC<ShortProviderProps> = ({ children }) => {
   const [shorts, setShorts] = useState<Short[]>([]);
   const id = "UCRxFGF-6opBkYyrC2vVcVpg"
-  const apikey = "AIzaSyDa6rcltjQfF4kWtbKveTH06gGKbOSCJ6k"
 
   useEffect(() => {
-    
-
     fetchShorts();
   }, []);
 
   const fetchShorts = async () => {
     try {
-      const response: any = await axios.get<Short[]>(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=${id}&maxResults=10&order=date&key=${apikey}`, 
+      const response: any = await axios.get<Short[]>(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=${id}&maxResults=10&order=date&key=${process.env.REACT_APP_API_KEY}`, 
         { headers: {"Accept": "application/json",
-        'Authorization':  apikey}});
+        'Authorization':  process.env.REACT_APP_API_KEY}});
       const res = response['data']['items']
       console.log(res[0]['snippet']['thumbnails'])
       const transformRes = transformNestedObjectsToArrays(res);
